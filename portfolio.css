@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+
+/* Font Definition */
+@font-face {
+  font-family: 'Vanger';
+  src: url('fonts/Vanger.otf') format('opentype'),
+       url('fonts/Vanger.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Dark mode defaults */
+:root {
+  --bg-color: radial-gradient(circle at top left, #0f0f0f, #1a0033, #000000);
+  --text-color: white;
+  --card-bg: rgba(15, 15, 15, 0.95);
+  --highlight-color: #00faff;
+  --name-color: #00faff;
+}
+
+/* Light mode overrides */
+body.light-mode {
+  --bg-color: linear-gradient(135deg, #fdfdfd, #e3f2fd);
+  --text-color: #2b2b2b;
+  --card-bg: #ffffff;
+  --highlight-color: #0077ff;
+  --name-color: #000000;
+}
+
+html {
+  height: 100%;
+  background-color: black;
+}
+
+body {
+  font-family: 'Vanger', serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s ease, color 0.3s ease;
+}
+
+/* Responsive fallback glow for mobile */
+@media (hover: none) and (pointer: coarse) {
+  .nav-animated {
+    animation: pulseGlow 2s infinite alternate ease-in-out;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      box-shadow: 0 0 0px transparent;
+    }
+    100% {
+      box-shadow: 0 0 12px 4px #FFA50066;
+    }
+  }
+}
+
+
+/* Layout */
+.content-wrapper {
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Nav */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+.nav-item {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 30px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: transparent;
+  border: 2px solid transparent;
+  text-transform: uppercase;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.nav-item:hover {
+  color: white;
+  background: rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 20px var(--highlight-color);
+  border-color: var(--highlight-color);
+  transform: scale(1.05);
+}
+
+.nav-animated {
+  position: relative;
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border: 2px solid transparent;
+  background-color: transparent;
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.nav-animated::before {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  transform: translate(-50%, -50%);
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 115, 0, 0.6) 0%,     /* Bright orange center */
+    rgba(255, 115, 0, 0.3) 20%,    /* Fades outward */
+    rgba(255, 115, 0, 0.05) 60%,
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(10px); /* Soft glow effect */
+}
+
+
+.nav-animated:hover::before {
+  opacity: 1;
+}
+
+/* Hamburger Button */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-color);
+  transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    align-items: center;
+    display: none;
+    width: 100%;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--name-color);
+  text-shadow: 0 0 10px var(--highlight-color), 0 0 20px var(--highlight-color);
+}
+
+/* Search */
+.search-form input {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: none;
+  background: #222;
+  color: white;
+}
+
+/* Toggle Button */
+.mode-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin-left: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.mode-toggle:hover {
+  transform: rotate(20deg);
+}
+
+/* Flip Card */
+.flip-card {
+  background-color: transparent;
+  width: 300px;
+  height: 400px;
+  margin: 40px auto;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+}
+
+.flip-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flip-card-back {
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 20px;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.flip-card-back h2 {
+  margin-bottom: 10px;
+  color: #00faff;
+  text-shadow: 0 0 5px #00faff;
+}
+
+/* Buttons */
+.btn-linkedin,
+.btn-projects {
+  background: linear-gradient(45deg, var(--highlight-color), #0099ff);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 6px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+.btn-linkedin:hover,
+.btn-projects:hover {
+  background: white;
+  color: var(--highlight-color);
+  box-shadow: 0 0 16px rgba(0, 255, 255, 0.5);
+}
+
+.linkedin-icon {
+  margin: 10px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.linkedin-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Desktop-only hover flip */
+@media (hover: hover) and (pointer: fine) {
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+}
+
+.text-glow {
+  color: cyan;
+  text-shadow: 0 0 10px cyan;
+}
+
+.bubble-hover:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Get In Touch Form Styling */
+.get-in-touch-section {
+  font-family: 'Poppins', sans-serif;
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 30px;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.2);
+}
+
+.get-in-touch-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.get-in-touch-section label {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.get-in-touch-section input,
+.get-in-touch-section textarea {
+  font-size: 1.1rem;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.get-in-touch-section textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.get-in-touch-section .btn {
+  font-size: 1.1rem;
+  padding: 12px 24px;
+}
