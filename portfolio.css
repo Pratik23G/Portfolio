@@ -1,4 +1,4 @@
-
+/* VARIABLES & RESET */
 :root {
   --color-bg: #0a0a0f;
   --color-bg-secondary: #121218;
@@ -763,6 +763,80 @@ button:focus-visible {
   z-index: 5;
 }
 .project-link:hover { gap: 0.75rem; }
+
+/* =========================
+   PROJECT SCREENSHOT GALLERY
+   Desktop: responsive grid
+   Mobile: horizontal swipe
+   ========================= */
+.project-gallery{
+  margin-top: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.project-gallery.single{
+  grid-template-columns: 1fr;
+  max-width: 560px;
+}
+
+.project-gallery figure{
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.02);
+  transition: transform .25s ease, border-color .25s ease, background-color .25s ease;
+  min-width: 0;
+}
+
+.project-gallery figure:hover{
+  transform: translateY(-4px);
+  border-color: rgba(99,102,241,0.55);
+  background: rgba(255,255,255,0.03);
+}
+
+.project-gallery img{
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.project-gallery figcaption{
+  padding: .65rem .85rem;
+  font-size: .85rem;
+  color: var(--color-text-muted);
+  line-height: 1.35;
+  background: rgba(0,0,0,0.22);
+}
+
+/* Mobile swipe */
+@media (max-width: 700px){
+  .project-gallery{
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.25rem 0.25rem 0.75rem;
+  }
+
+  .project-gallery::-webkit-scrollbar{ height: 10px; }
+  .project-gallery::-webkit-scrollbar-thumb{
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+  }
+
+  .project-gallery figure{
+    flex: 0 0 260px;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 420px){
+  .project-gallery figure{ flex-basis: 230px; }
+}
 
 .project-visual {
   width: 200px;
